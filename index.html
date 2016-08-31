@@ -44,7 +44,7 @@
 				<h1>Article with picture of Ben</h1>
 			</header>
 			<figure>
-				<img src="ben.jpg">
+				<img src="img/ben.jpg">
 				<figcaption>
 					The man himself.
 				</figcaption>
@@ -118,11 +118,11 @@
 				// DOM manipulation
 
 				// removeChild
-				var listItem = document.querySelector("li.rip");
+				var listItem = document.querySelector("#target ul li.rip");
 				listItem.parentElement.removeChild(listItem);
 
 				// remove, book recommends removeNode(true) but it is IE only
-				listItem = document.querySelector("li.rip");
+				listItem = document.querySelector("#target ul li.rip");
 				listItem.remove();
 
 				// createElement, appendChild
@@ -133,6 +133,12 @@
 				// insertBefore
 				var anotherItem = unordered.insertBefore(document.createElement("li"), newItem);
 				anotherItem.innerHTML = "<strong>R-r-r-rewind</strong>";
+
+				// replaceChild, book recommends replaceNoe but it is IE only
+				var firstListItem = document.querySelector("#target ul li");
+				var replacementItem = document.createElement("li");
+				unordered.replaceChild(replacementItem, firstListItem);
+				replacementItem.innerHTML = "<mark>SwitcharooooooooOOOOOOOOOOOOO</mark>";
 			}
 		</script>
 	</body>
