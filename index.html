@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+	<head>
+		<meta charset="utf-8" />
+		<title>Ben is a cool guy</title>
+	</head>
+	<body>
+		<header>
+			<h1>Ben is really dope</h1>
+			<nav>
+				<h1>Places to go</h1>
+				<a href="#">Page 1</a>
+				<a href="#">Page 2</a>
+				<a href="#">Page 3</a>
+			</nav>
+		</header>
+		<article>
+			<header>
+				<h1>Article about Ben's greatness</h1>
+			</header>
+			<section class="best-section">
+				<h1>First reason</h1>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tristique lorem id ante interdum, non ullamcorper dui venenatis. Nam porta ipsum nec tempus pharetra. Duis scelerisque, odio eget vulputate consequat, erat purus porta tellus, blandit eleifend ante arcu non nunc. Proin sit amet accumsan libero. Curabitur vulputate ipsum quis lectus lobortis, sit amet rutrum eros mollis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc massa nunc, porta at pharetra non, dictum eget diam.
+				</p>
+				<aside>
+					<h1>Another thing to consider about Ben</h1>
+					In a auctor nibh, at aliquet ante. Aliquam hendrerit nulla sit amet fermentum facilisis. Sed elit turpis, pulvinar venenatis ipsum id, fringilla vehicula lacus. Fusce molestie finibus tortor eget semper.
+				</aside>
+			</section>
+			<section>
+				<h1>Second reason</h1>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tristique lorem id ante interdum, non ullamcorper dui venenatis. Nam porta ipsum nec tempus pharetra. Duis scelerisque, odio eget vulputate consequat, erat purus porta tellus, blandit eleifend ante arcu non nunc. Proin sit amet accumsan libero. Curabitur vulputate ipsum quis lectus lobortis, sit amet rutrum eros mollis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc massa nunc, porta at pharetra non, dictum eget diam.
+				</p>
+				<aside>
+					<h1>Further Ben considerations</h1>
+					In a auctor nibh, at aliquet ante. Aliquam hendrerit nulla sit amet fermentum facilisis. Sed elit turpis, pulvinar venenatis ipsum id, fringilla vehicula lacus. Fusce molestie finibus tortor eget semper.
+				</aside>
+			</section>
+		</article>
+		<article>
+			<header>
+				<h1>Article with picture of Ben</h1>
+			</header>
+			<figure>
+				<img src="ben.jpg">
+				<figcaption>
+					The man himself.
+				</figcaption>
+			</figure>
+		</article>
+		<article>
+			<header>
+				<h1>Ben's Progress</h1>
+			</header>
+			<section class="best-section">
+				<h1>Towards being a model human being</h1>
+				<progress value="69" max="75"></progress>
+				<p>Ben is getting <mark>extremely</mark> close</p>
+			</section>
+			<section>
+				<h1>Towards the ethereal void</h1>
+				<progress max="101"></progress>
+				<p>Praise be unto him</p>
+			</section>
+		</article>
+		<footer>
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tristique lorem id ante interdum, non ullamcorper dui venenatis.
+			</p>
+		</footer>
+		<article id="target">
+			<ul>
+				<li>First</li>
+				<li>Second</li>
+				<li>Third</li>
+				<li class="rip">Remove Me</li>
+				<li class="rip">Also Remove Me</li>
+				<li class="switch">Also Remove Me</li>
+			</ul>
+		</article>
+		<script>
+			window.onload = function() {
+				// DOM Querying
+
+				// getElementById
+				var list = document.getElementById("target");
+				console.log(list.innerHTML);
+
+				// getElementByClassName
+				var sections = document.getElementsByClassName("best-section");
+				console.log(sections);
+
+				// getElementByTagName
+				var headings = document.getElementsByTagName("p");
+				console.log(headings.length);
+
+				// querySelector
+				var firstParagraph = document.querySelector("section > p");
+				console.log(firstParagraph.innerHTML);
+
+				// querySelectorAll
+				var topHeadings = document.querySelectorAll("header > h1");
+				console.log(topHeadings.length);
+
+				for(var i = 0; i < topHeadings.length; i++) {
+					console.log(topHeadings[i].innerHTML);
+				}
+
+				// DOM Hierarchy
+				var unordered = list.querySelector("#target ul");
+				console.log(unordered.childNodes.length);
+				console.log(unordered.firstChild.data);
+				console.log(unordered.lastChild.innerHTML);
+				console.log(unordered.hasChildNodes());
+
+				// DOM manipulation
+
+				// removeChild
+				var listItem = document.querySelector("li.rip");
+				listItem.parentElement.removeChild(listItem);
+
+				// remove, book recommends removeNode(true) but it is IE only
+				listItem = document.querySelector("li.rip");
+				listItem.remove();
+
+				// createElement, appendChild
+				var newItem = document.createElement("li");
+				unordered.appendChild(newItem);
+				newItem.innerHTML = "<em>OUTTA NOWHERE</em>";
+
+				// insertBefore
+				var anotherItem = unordered.insertBefore(document.createElement("li"), newItem);
+				anotherItem.innerHTML = "<strong>R-r-r-rewind</strong>";
+			}
+		</script>
+	</body>
+</html>
