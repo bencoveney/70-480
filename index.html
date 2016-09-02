@@ -80,7 +80,48 @@
 				<li class="switch">Also Remove Me</li>
 			</ul>
 		</article>
-		<video src="video/good.mp4" autoplay></video>
+		<article>
+			<header>
+				<h1>Clip of people enjoying Ben</h1>
+			</header>
+			<section>
+				<h1>The Clip</h1>
+				<video autoplay controls loop poster="img/ben.jpg" height="270" width="640" id="goodVideo">
+					<source src="video/good.mp4" type="video/mp4">
+					<object>
+						<p>Video is not supported by this browser</p>
+					</object>
+				</video>
+			</section>
+			<section>
+				<h1>Extra Controls</h1>
+				<button onclick="video.play();">Play</button>
+				<button onclick="video.pause();">Pause</button>
+				<button onclick="video.forward();">Forward</button>
+				<button onclick="video.back();">Back</button>
+			</section>
+		</article>
+		<article>
+			<header>
+				<h1>Ben's sounds</h1>
+			</header>
+			<section>
+				<h1>Sax</h1>
+				<audio autoplay controls loop id="goodAudio">
+					<source src="sound/sax.mp3">
+					<object>
+						<p>Audio is not supported by this browser</p>
+					</object>
+				</audio>
+			</section>
+			<section>
+				<h1>Extra Controls</h1>
+				<button onclick="audio.play();">Play</button>
+				<button onclick="audio.pause();">Pause</button>
+				<button onclick="audio.forward();">Forward</button>
+				<button onclick="audio.back();">Back</button>
+			</section>
+		</article>
 		<script>
 			window.onload = function() {
 				// DOM Querying
@@ -140,6 +181,42 @@
 				var replacementItem = document.createElement("li");
 				unordered.replaceChild(replacementItem, firstListItem);
 				replacementItem.innerHTML = "<mark>SwitcharooooooooOOOOOOOOOOOOO</mark>";
+			}
+
+			function getVideo() {
+				return document.getElementById("goodVideo");
+			}
+			var video = {
+				play: function() {
+					getVideo().play();
+				},
+				pause: function() {
+					getVideo().pause();
+				},
+				forward: function() {
+					getVideo().currentTime += 5
+				},
+				back: function() {
+					getVideo().currentTime -= 5;
+				}
+			}
+
+			function getAudio() {
+				return document.getElementById("goodAudio");
+			}
+			var audio = {
+				play: function() {
+					getAudio().play();
+				},
+				pause: function() {
+					getAudio().pause();
+				},
+				forward: function() {
+					getAudio().currentTime += 0.5
+				},
+				back: function() {
+					getAudio().currentTime -= 0.5;
+				}
 			}
 		</script>
 	</body>
