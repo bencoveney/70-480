@@ -107,7 +107,7 @@
 			</header>
 			<section>
 				<h1>Sax</h1>
-				<audio autoplay controls loop id="goodAudio">
+				<audio controls loop id="goodAudio">
 					<source src="sound/sax.mp3">
 					<object>
 						<p>Audio is not supported by this browser</p>
@@ -122,9 +122,17 @@
 				<button onclick="audio.back();">Back</button>
 			</section>
 		</article>
+		<article>
+			<header>
+				<h1>Feelings about Ben expressed as Art</h1>
+			</header>
+			<section>
+				<canvas id="picture1" width="600" height="400">
+			</section>
+		</article>
 		<script>
 			window.onload = function() {
-				// DOM Querying
+				// DOM Querying -----------------------------------------
 
 				// getElementById
 				var list = document.getElementById("target");
@@ -157,7 +165,7 @@
 				console.log(unordered.lastChild.innerHTML);
 				console.log(unordered.hasChildNodes());
 
-				// DOM manipulation
+				// DOM manipulation -----------------------------------------
 
 				// removeChild
 				var listItem = document.querySelector("#target ul li.rip");
@@ -181,6 +189,95 @@
 				var replacementItem = document.createElement("li");
 				unordered.replaceChild(replacementItem, firstListItem);
 				replacementItem.innerHTML = "<mark>SwitcharooooooooOOOOOOOOOOOOO</mark>";
+
+				// Canvas -----------------------------------------
+
+				var canvas = document.getElementById("picture1");
+				var context = canvas.getContext("2d");
+
+				// Lines
+				context.beginPath();
+				context.moveTo(10, 10); // With pen up
+				context.lineTo(255, 350); // With pen down
+				context.lineTo(300, 10);
+				context.lineTo(400, 350);
+				context.lineWidth = 5;
+				context.lineCap = "round";
+				context.strokeStyle = "#88FF00";
+				context.stroke(); // Create line
+
+				// Curves
+				// context.arc(centerX, centerY, radius, startAngle, endAngle, counterClockwise)
+				context.beginPath();
+				context.arc(150, 100, 75, 0, 2 * Math.PI, false);
+				context.lineWidth = 24;
+				context.strokeStyle = "#00FF88";
+				context.stroke();
+
+				context.beginPath();
+				context.arc(450, 100, 75, 1.5 * Math.PI, 2 * Math.PI, false);
+				context.lineWidth = 21;
+				context.strokeStyle = "#0088FF";
+				context.stroke();
+
+				context.beginPath();
+				context.arc(150, 300, 75, Math.PI, 1.5 * Math.PI, false);
+				context.lineWidth = 18;
+				context.strokeStyle = "#00FFFF";
+				context.stroke();
+
+				context.beginPath();
+				context.arc(450, 300, 75, 0.5 * Math.PI, Math.PI, false);
+				context.lineWidth = 15;
+				context.strokeStyle = "#FF0000";
+				context.stroke();
+
+				// context.quadraticCurveTo(controlX, controlY, endX, endY)
+				context.beginPath();
+				context.moveTo(10, 380);
+				context.quadraticCurveTo(300, -250, 580, 380);
+				context.lineWidth = 12;
+				context.strokeStyle = "#FF8800";
+				context.stroke();
+
+				// context.bezierCurveTo(control1X, control1Y, control2X, control2Y, endX, endY)
+				context.beginPath();
+				context.moveTo(125, 20);
+				context.bezierCurveTo(0, 200, 300, 300, 50, 400);
+				context.lineWidth = 9;
+				context.strokeStyle = "#FF0088";
+				context.stroke();
+
+				// rect(x, y, width, height)
+				context.beginPath();
+				context.rect(300, 200, 150, 75);
+				context.stroke();
+				context.fillStyle = "#FFFF88";
+				context.fill();
+
+				// fillRect(x, y, width, height)
+				context.fillStyle = "#FF88FF";
+				context.fillRect(225, 125, 150, 75);
+
+				// Linear gradient
+				context.beginPath();
+				context.rect(150, 150, 200, 125);
+				var gradient = context.createLinearGradient(150, 150, 200, 125);
+				gradient.addColorStop(0, "#000000");
+				gradient.addColorStop(0.5, "#FF8888");
+				gradient.addColorStop(1, "#FFFFFF");
+				context.fillStyle = gradient;
+				context.fill();
+
+				// Radial gradient
+				context.beginPath();
+				context.rect(450, 150, 200, 125);
+				var gradient = context.createRadialGradient(500, 200, 5, 550, 250, 100);
+				gradient.addColorStop(0, "#000000");
+				gradient.addColorStop(0.5, "#88FF88");
+				gradient.addColorStop(1, "#FFFFFF");
+				context.fillStyle = gradient;
+				context.fill();
 			}
 
 			function getVideo() {
