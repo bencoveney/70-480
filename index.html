@@ -127,7 +127,33 @@
 				<h1>Feelings about Ben expressed as Art</h1>
 			</header>
 			<section>
+				<h1>"Summer Coveney" <small>by Ben Coveney</em></h1>
 				<canvas id="picture1" width="600" height="400">
+			</section>
+			<section>
+				<h1>"Scovable Benctor Graphics" <small>by Ben Coveney</em></h1>
+				<svg width="600" height="400">
+					<circle cx="50" cy="50" r="50", fill="green" onmouseover="Red(event)" onmouseout="Green(event)" />
+
+					<rect x="100" y="100" width="60" height="200" fill="black" />
+					<circle cx="129" cy="145" r="25" fill="red" />
+					<circle cx="129" cy="205" r="25" fill="yellow" />
+					<circle cx="129" cy="265" r="25" fill="green" />
+
+					<polygon points="200,15 230,35 210,85 300,85 270,35 300,15" fill="purple" />
+
+					<polyline points="10,150 30,170 50,132 60,196 78,165 96,170" style="stroke:orange; fill:none; stroke-width: 5;" />
+
+					<line x1="200" y1="100" x2="200" y2="150" style="stroke: blue; stroke-width: 3;" />
+
+					<ellipse cx="250" cy="150" rx="30" ry="55" fill="brown" />
+
+					<text x="200" y="300" style="stroke: black; stroke-width: 1;">
+						Has anyone really been far even as decided to use even go want to do look more like?
+					</text>
+
+					<image href="img/soapy.png" width="250" height="250" x="300"/>
+				</svg>
 			</section>
 		</article>
 		<script>
@@ -344,6 +370,16 @@
 				back: function() {
 					getAudio().currentTime -= 0.5;
 				}
+			}
+
+			function Red(event) {
+				var circle = event.target;
+				circle.setAttribute("style", "fill: red");
+			}
+
+			function Green(event) {
+				var circle = event.target;
+				circle.setAttribute("style", "fill: green");
 			}
 		</script>
 	</body>
