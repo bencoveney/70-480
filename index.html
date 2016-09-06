@@ -278,6 +278,36 @@
 				gradient.addColorStop(1, "#FFFFFF");
 				context.fillStyle = gradient;
 				context.fill();
+
+				// Images
+				var image = new Image();
+				image.src = "img/soapy.png";
+				image.onload = function() {
+					// Image fill style
+					context.beginPath();
+					context.rect(400, 225, 275, 200);
+					var pattern = context.createPattern(image, "repeat");
+					context.fillStyle = pattern;
+					context.fill();
+
+					// drawImage()
+					context.drawImage(image, 0, 275, image.height / 2, image.width / 2)
+				};
+
+				// Text
+				context.lineWidth = 1;
+				context.strokeStyle = "#880088";
+				context.strokeText("It's good", 100, 100);
+				
+				context.font = "24px arial";
+				context.strokeText("It's really good", 100, 120);
+				
+				context.textAlign = "center";
+				context.strokeStyle = "#008888";
+				context.strokeText("It's great", 100, 150);
+				
+				context.fillStyle = "#888800";
+				context.fillText("It's amazing", 100, 180);
 			}
 
 			function getVideo() {
