@@ -156,6 +156,21 @@
 				</svg>
 			</section>
 		</article>
+		<article>
+			<header>
+				<h1>Visit Counter</h1>
+			</header>
+			<section id="sessionVisits">
+				<h1>Session</h1>
+				<span></span>
+				<button onclick="clearSession();">Clear</button>
+			</section>
+			<section id="localVisits">
+				<h1>Local</h1>
+				<span></span>
+				<button onclick="clearLocal();">Clear</button>
+			</section>
+		</article>
 		<script>
 			window.onload = function() {
 				// DOM Querying -----------------------------------------
@@ -334,6 +349,10 @@
 				
 				context.fillStyle = "#888800";
 				context.fillText("It's amazing", 100, 180);
+
+				// Storage
+				loadSession();
+				loadLocal();
 			}
 
 			function getVideo() {
@@ -380,6 +399,32 @@
 			function Green(event) {
 				var circle = event.target;
 				circle.setAttribute("style", "fill: green");
+			}
+
+			function clearSession() {
+				sessionStorage.removeItem("visits");
+				loadSession();
+			}
+
+			function loadSession() {
+				var sessionElement = document.querySelector("#sessionVisits > span");
+				var sessionCount = JSON.parse(sessionStorage.getItem("visits"));
+				sessionCount = sessionCount ? sessionCount + 1 : 1;
+				sessionElement.innerText = sessionCount;
+				sessionStorage.setItem("visits", sessionCount);
+			}
+
+			function clearLocal() {
+				localStorage.removeItem("visits");
+				loadLocal();
+			}
+
+			function loadLocal() {
+				var localElement = document.querySelector("#localVisits > span");
+				var localCount = JSON.parse(window.localStorage.getItem("visits"));
+				localCount = localCount ? localCount + 1 : 1;
+				localElement.innerText = localCount;
+				localStorage.setItem("visits", localCount);
 			}
 		</script>
 	</body>
