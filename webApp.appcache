@@ -1,0 +1,17 @@
+CACHE MANIFEST
+# Ben's cool website MANIFEST
+
+# Explicitly Cached
+CACHE:
+img/soapy.png
+sound/sax.mp3
+video/good.mp4
+
+# Required over the network
+NETWORK:
+index.html
+img/ben.jpg
+
+# Replacements
+FALLBACK:
+img/ben.jpg img/ben_alternate.jpg

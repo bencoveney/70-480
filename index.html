@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en-GB" manifest="webApp.appcache">
 	<head>
 		<meta charset="utf-8" />
 		<title>Ben is a cool guy</title>
@@ -350,10 +350,59 @@
 				context.fillStyle = "#888800";
 				context.fillText("It's amazing", 100, 180);
 
-				// Storage
+				// Storage -----------------------------------------
+
 				loadSession();
 				loadLocal();
 			}
+
+			// AppCache -----------------------------------------
+
+			var appCache = window.applicationCache;
+			console.log(appCache);
+
+			function cacheStatus() {
+				console.log(arguments);
+				switch (appCache.status) {
+					case appCache.UNCACHED: // UNCACHED == 0
+						console.log('UNCACHED');
+						break;
+					case appCache.IDLE: // IDLE == 1
+						console.log('IDLE');
+						break;
+					case appCache.CHECKING: // CHECKING == 2
+						console.log('CHECKING');
+						break;
+					case appCache.DOWNLOADING: // DOWNLOADING == 3
+						console.log('DOWNLOADING');
+						break;
+					case appCache.UPDATEREADY:  // UPDATEREADY == 4
+						console.log('UPDATEREADY');
+						break;
+					case appCache.OBSOLETE: // OBSOLETE == 5
+						console.log('OBSOLETE');
+						break;
+					default:
+						console.log('UKNOWN CACHE STATUS');
+						break;
+				};
+			}
+
+			cacheStatus();
+
+			appCache.onchecking = cacheStatus;
+			appCache.onnoupdate = cacheStatus;
+			appCache.ondownloading = cacheStatus;
+			appCache.onprogress = cacheStatus;
+			appCache.oncached = cacheStatus;
+			appCache.onupdateready = cacheStatus;
+			appCache.onobsolete = cacheStatus;
+			appCache.onerror = cacheStatus;
+
+			// Doesn't work. App cache deprecated, maybe ignored?
+			//appCache.update();
+
+			// Video Controls -----------------------------------------
 
 			function getVideo() {
 				return document.getElementById("goodVideo");
@@ -373,6 +422,8 @@
 				}
 			}
 
+			// Audio Controls -----------------------------------------
+
 			function getAudio() {
 				return document.getElementById("goodAudio");
 			}
@@ -391,6 +442,8 @@
 				}
 			}
 
+			// SVG -----------------------------------------
+
 			function Red(event) {
 				var circle = event.target;
 				circle.setAttribute("style", "fill: red");
@@ -400,6 +453,8 @@
 				var circle = event.target;
 				circle.setAttribute("style", "fill: green");
 			}
+
+			// Storage -----------------------------------------
 
 			function clearSession() {
 				sessionStorage.removeItem("visits");
