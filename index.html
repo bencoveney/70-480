@@ -605,6 +605,67 @@
 			}
 			var mySickestInstance = new MySickestClass("Ben Coveney", 5552525255525252);
 			mySickestInstance.howSick();
+			
+			// Program Flow -----------------------------------------
+
+			if ("1" == 2) {
+				console.log("a");
+			} else if ("2" == 2) {
+				console.log("b");
+			} else {
+				console.log("c");
+			}
+
+			var target = "second";
+			switch (target) {
+				case "first":
+					console.log("1st");
+					break;
+				case "second":
+					console.log("2nd");
+					break;
+				case "third":
+					console.log("3rd");
+					break;
+				default:
+					console.log("??!??!!?!??!!!??!");
+					break;
+			}
+
+			console.log("hello" === "goodbye" ? "hi" : "cya");
+
+			var animals = new Array("dogs", "cats", "cows", "chickens");
+			var animalSounds = ["woof", "meow", "moo", "cluck"];
+			animalSounds.sort();
+			
+			console.log(animals[2]);
+			console.log(animals.length);
+
+			var moreAnimals = animals.concat(["lizards", "pigs"]);
+			console.log(moreAnimals);
+
+			console.log(moreAnimals.indexOf("cows"));
+			console.log(moreAnimals.lastIndexOf("cows"));
+			console.log(moreAnimals.join(", "));
+			console.log(moreAnimals.reverse());
+
+			animalSounds.sort();
+			console.log(animalSounds);
+
+			console.log(moreAnimals.slice(1, 3)); // Exclusive last param
+			console.log(moreAnimals.splice(1, 2, "fish", "sheep", "salmon")); // Inclusive last param. extracted items returned.
+			console.log(moreAnimals);
+
+			var cars = ["BMW", "Ferrari", "Peugeot", "Skoda", "Vauxhaul", "Fiat"];
+			console.log(cars);
+
+			console.log(cars.pop());
+			cars.push("Audi");
+
+			console.log(cars.shift());
+			cars.unshift("Jeep");
+
+			console.log(cars);
 		</script>
 	</body>
 </html>
