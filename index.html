@@ -420,7 +420,7 @@
 			appCache.onobsolete = cacheStatus;
 			appCache.onerror = cacheStatus;
 
-			appCache.update();
+			//appCache.update();
 
 			// Video Controls -----------------------------------------
 
@@ -517,6 +517,94 @@
 			function watchPosition(position) {
 				console.log("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
 			}
+
+			// General JS -----------------------------------------
+
+			// Scope
+			var naughtyGlobalVariable = "hello";
+			function outer() {
+				var scopedVariable = "hullo";
+				function inner1() {
+					var evenMoreScopedVariable = "hallo";
+				}
+				function inner2() {
+					// Won't work.
+					// console.log(evenMoreScopedVariable);
+				}
+				inner1()
+				inner2()
+			}
+			outer();
+
+			// Window
+			console.log(this);
+			
+			// Objects -----------------------------------------
+
+			// Provided
+			console.log(Math.sqrt(144));
+			console.log(new Array(1, 2, 3, 5, 7));
+
+			// Wrappers on native types
+			console.log("hello".indexOf("ll", 0));
+			console.log((5).toExponential(2));
+
+			// Custom
+			var myCustomObject = {
+				name: "Ben Coveney",
+				coolness: 123456,
+				howCool: function() {
+					console.log(this.name + " has a coolness level of " + this.coolness);
+				}
+			}
+			myCustomObject.howCool();
+
+			// Class-like
+			function MySickClass(name, sickness) {
+				if (name) {
+					this.name = name;
+				}
+				if (sickness) {
+					this.sickness = sickness;
+				}
+			}
+			MySickClass.prototype.name = "default guy";
+			MySickClass.prototype.sickness = 0;
+			MySickClass.prototype.howSick = function() {
+				console.log(this.name + " has a sickness level of " + this.sickness);
+			};
+			(new MySickClass()).howSick();
+			(new MySickClass("Ben Coveney", 123456)).howSick();
+
+			// Inheritance - Object.create
+			var mySickerInstance = Object.create(
+				MySickClass.prototype, 
+				{
+					howSick: { 
+						value: function() {
+							console.log(this.name + " has a even sicker level of " + this.sickness);
+						}
+					},
+					howAmazing: {
+						value: function() {
+							console.log(this.name + " is probably the most amazing guy");
+						}
+					}
+				}
+			);
+			mySickerInstance.howSick();
+			mySickerInstance.howAmazing();
+
+			// Inheritance - Call through to base
+			function MySickestClass(name, sickness) {
+				MySickClass.call(this, name, sickness);
+			}
+			MySickestClass.prototype = Object.create(MySickClass.prototype);
+			MySickestClass.prototype.howSick = function() {
+				console.log(this.name + " is literally the sickest dude");
+			}
+			var mySickestInstance = new MySickestClass("Ben Coveney", 5552525255525252);
+			mySickestInstance.howSick();
 		</script>
 	</body>
 </html>
