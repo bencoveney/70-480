@@ -170,6 +170,10 @@
 				<span></span>
 				<button onclick="clearLocal();">Clear</button>
 			</section>
+			<section id="visitingFrom">
+				<h1>Visiting From</h1>
+				<span></span>
+			</section>
 		</article>
 		<script>
 			window.onload = function() {
@@ -354,6 +358,24 @@
 
 				loadSession();
 				loadLocal();
+
+				// Location -----------------------------------------
+
+				// getCurrentPosition
+				var geolocation = window.navigator.geolocation;
+				var geolocationOptions = {
+					enableHighAccuracy: true,
+					timeout: 45000
+				};
+				geolocation.getCurrentPosition(successPosition, errorPosition, geolocationOptions);
+
+				// watchPosition
+				var watcher;
+				var clearWatch = function(position) {
+					watchPosition(position);
+					geolocation.clearWatch(watcher);
+				}
+				watcher = geolocation.watchPosition(clearWatch, errorPosition, geolocationOptions);
 			}
 
 			// AppCache -----------------------------------------
@@ -362,7 +384,6 @@
 			console.log(appCache);
 
 			function cacheStatus() {
-				console.log(arguments);
 				switch (appCache.status) {
 					case appCache.UNCACHED: // UNCACHED == 0
 						console.log('UNCACHED');
@@ -399,8 +420,7 @@
 			appCache.onobsolete = cacheStatus;
 			appCache.onerror = cacheStatus;
 
-			// Doesn't work. App cache deprecated, maybe ignored?
-			//appCache.update();
+			appCache.update();
 
 			// Video Controls -----------------------------------------
 
@@ -480,6 +500,22 @@
 				localCount = localCount ? localCount + 1 : 1;
 				localElement.innerText = localCount;
 				localStorage.setItem("visits", localCount);
+			}
+
+			// Storage -----------------------------------------
+
+			function successPosition(position) {
+				var visitingFrom = document.querySelector("#visitingFrom span");
+				visitingFrom.innerText = "Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude;
+			}
+
+			function errorPosition(error) {
+				var visitingFrom = document.querySelector("#visitingFrom span");
+				visitingFrom.innerText = "Error: " + error.message + " Code: " + error.code;
+			}
+
+			function watchPosition(position) {
+				console.log("Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude);
 			}
 		</script>
 	</body>
