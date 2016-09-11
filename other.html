@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-GB" manifest="webApp.appcache">
+	<head>
+		<meta charset="utf-8" />
+		<title>Ben is a cool guy - Other info</title>
+	</head>
+	<body onload="onloadHandler1();">
+		<div id="eventy">
+			<button>Hello!</button>
+		</div>
+
+		<div id="cancel">
+			<a href="http://www.google.com/">Google?</a>
+		</div>
+
+		<div id="nestOuter" style="padding: 10px; background-color: red;">
+			<div id="nestMiddle" style="padding: 10px; background-color: yellow;">
+				<div id="nestInner" style="padding: 10px; background-color: green;">
+				</div>
+			</div>
+		</div>
+
+		<div id="change">
+			<input>
+		</div>
+
+		<script>
+			// Execute existing handler assigned in the DOM
+			function onloadHandler1() {
+				console.log("Inside onload handler");
+			}
+			window.onload();
+			
+			// Assign handler using JS
+			function onloadHandler2() {
+				console.log("Inside another onload handler");
+			}
+			window.onload = onloadHandler2();
+
+			function onloadHandler3() {
+				console.log("Inside yet another onload handler");
+			}
+			function onloadHandler4() {
+				console.log("Gunna get removed LOL");
+			}
+			window.addEventListener("load", onloadHandler3, false);
+			window.addEventListener("load", onloadHandler4, false);
+			window.removeEventListener("load", onloadHandler4, false);
+
+			window.addEventListener(
+				"load", 
+				function() {
+					document.querySelector("div#eventy button").addEventListener("click", function() {
+						console.log("It's clicky");
+					}, false);
+
+					document.querySelector("div#cancel a").addEventListener("click", function() { 
+						console.log("Not so fast");
+						window.event.returnValue = false;
+					}, false);
+
+					document.querySelector("div#nestOuter").addEventListener("click", function() { console.log("nestOuter down"); }, false);
+					document.querySelector("div#nestMiddle").addEventListener("click", function() { console.log("nestMiddle down"); }, false);
+					document.querySelector("div#nestInner").addEventListener("click", function() { console.log("nestInner down"); }, false);
+					document.querySelector("div#nestOuter").addEventListener("click", function() { console.log("nestOuter up"); }, true);
+					document.querySelector("div#nestMiddle").addEventListener("click", function() { console.log("nestMiddle up"); }, true);
+					document.querySelector("div#nestInner").addEventListener("click", function() { console.log("nestInner up"); }, true);
+
+					var changeInput = document.querySelector("div#change input");
+					changeInput.addEventListener("change", function() {
+						console.log(this.value);
+					}, false);
+				}, 
+				false
+			);
+		</script>
+	</body>
+</html>
