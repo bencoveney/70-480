@@ -57,6 +57,12 @@
 			<div draggable="true" id="dropper" style="width: 100px; height: 100px; background-color: green; float: left; margin: 10px;">Bucket </div>
 		</div>
 
+		<div id="custom" style="clear: both;">
+			<h1>Custom</h1>
+			<div class="target">Target</div>
+			<button>Trigger</button>
+		</div>
+
 		<script>
 			// Execute existing handler assigned in the DOM
 			function onloadHandler1() {
@@ -168,6 +174,27 @@
 							window.event.returnValue = false;
 						});
 					}
+
+					var customEvent = new CustomEvent(
+						"apocalypse",
+						{
+							detail: {
+								description: "The end of the world"
+							},
+							bubbles: true,
+							cancelable: true
+						}
+					);
+
+					var customTarget = document.querySelector("#custom .target");
+					customTarget.addEventListener("apocalypse", function() {
+						console.log(window.event.detail.description);
+					});
+
+					var customButton = document.querySelector("#custom button");
+					customButton.addEventListener("click", function() {
+						customTarget.dispatchEvent(customEvent);
+					})
 				},
 				false
 			);
