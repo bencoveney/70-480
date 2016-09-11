@@ -3,25 +3,58 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Ben is a cool guy - Other info</title>
+		<style>
+			.hello {
+				font-size: 2em;
+			}
+		</style>
 	</head>
 	<body onload="onloadHandler1();">
 		<div id="eventy">
+			<h1>Eventy</h1>
 			<button>Hello!</button>
 		</div>
 
 		<div id="cancel">
+			<h1>Cancel</h1>
 			<a href="http://www.google.com/">Google?</a>
 		</div>
 
 		<div id="nestOuter" style="padding: 10px; background-color: red;">
+			<h1>Outer</h1>
 			<div id="nestMiddle" style="padding: 10px; background-color: yellow;">
+				<h1>Middle</h1>
 				<div id="nestInner" style="padding: 10px; background-color: green;">
+					<h1>Inner</h1>
 				</div>
 			</div>
 		</div>
 
 		<div id="change">
+			<h1>Change</h1>
 			<input>
+		</div>
+
+		<div id="focus">
+			<h1>Focus</h1>
+			<input>
+		</div>
+
+		<div id="keyboard">
+			<h1>Keyboard</h1>
+			<input>
+		</div>
+
+		<div id="mouse">
+			<h1>Mouse</h1>
+			<span style="background-color: red; padding: 10px;">Squeak squeak</span>
+		</div>
+
+		<div id="drag">
+			<h1>Drags</h1>
+			<div class="bucket" style="width: 200px; height: 200px; background-color: red; float: left; margin: 10px;">Bucket 1</div>
+			<div class="bucket" style="width: 200px; height: 200px; background-color: red; float: left; margin: 10px;">Bucket 2</div>
+			<div draggable="true" id="dropper" style="width: 100px; height: 100px; background-color: green; float: left; margin: 10px;">Bucket </div>
 		</div>
 
 		<script>
@@ -70,7 +103,72 @@
 					changeInput.addEventListener("change", function() {
 						console.log(this.value);
 					}, false);
-				}, 
+
+					function bindEvent(element, name) {
+						element.addEventListener(name, function() { console.log(name); console.log(window.event); }, false);
+					}
+
+					// Focus events. Call focus() to set focus.
+					var focusInput = document.querySelector("div#focus input");
+					bindEvent(focusInput, "focusin");
+					bindEvent(focusInput, "focus");
+					bindEvent(focusInput, "focusout");
+					bindEvent(focusInput, "blur");
+
+					// Keyboard input. Inspect window.event.[altKey, ctrlKey, shiftKey, keyCode]
+					var keyboardInput = document.querySelector("div#keyboard input");
+					bindEvent(keyboardInput, "keydown");
+					bindEvent(keyboardInput, "keyup");
+					bindEvent(keyboardInput, "keypress");
+
+					// Mouse input. Inspect window.event.[clientX, clientY, offsetX, offsetY, screenX, screenY]
+					var mouseInput = document.querySelector("div#mouse span");
+					bindEvent(mouseInput, "click");
+					bindEvent(mouseInput, "dblclick");
+					bindEvent(mouseInput, "mousedown");
+					bindEvent(mouseInput, "mouseup");
+					bindEvent(mouseInput, "mouseenter");
+					bindEvent(mouseInput, "mouseover");
+					bindEvent(mouseInput, "mouseleave");
+					bindEvent(mouseInput, "mousemove");
+
+					var dropper = document.getElementById("dropper");
+					dropper.addEventListener("dragstart", function() {
+						window.event.dataTransfer.setData("Text", this.id);
+					});
+
+					var buckets = document.querySelectorAll("div#drag .bucket");
+					for(var bCount = 0; bCount < buckets.length; bCount++)
+					{
+						var bucket = buckets[bCount];
+
+						bucket.addEventListener("dragenter", function() {
+							this.classList.add("hello");
+
+							window.event.returnValue = false;
+						});
+						
+						bucket.addEventListener("dragleave", function() {
+							this.classList.remove("hello");
+
+							window.event.returnValue = false;
+						});
+						
+						bucket.addEventListener("dragover", function() {
+							window.event.returnValue = false;
+						});
+						
+						bucket.addEventListener("drop", function() {
+							var droppedId = window.event.dataTransfer.getData("Text");
+							var dropped = document.getElementById(droppedId);
+							this.appendChild(dropped);
+
+							this.classList.remove("hello");
+
+							window.event.returnValue = false;
+						});
+					}
+				},
 				false
 			);
 		</script>
