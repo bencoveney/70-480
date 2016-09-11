@@ -608,6 +608,7 @@
 			
 			// Program Flow -----------------------------------------
 
+			// Branching flow
 			if ("1" == 2) {
 				console.log("a");
 			} else if ("2" == 2) {
@@ -634,6 +635,7 @@
 
 			console.log("hello" === "goodbye" ? "hi" : "cya");
 
+			// Array methods
 			var animals = new Array("dogs", "cats", "cows", "chickens");
 			var animalSounds = ["woof", "meow", "moo", "cluck"];
 			animalSounds.sort();
@@ -656,6 +658,7 @@
 			console.log(moreAnimals.splice(1, 2, "fish", "sheep", "salmon")); // Inclusive last param. extracted items returned.
 			console.log(moreAnimals);
 
+			// Special array types
 			var cars = ["BMW", "Ferrari", "Peugeot", "Skoda", "Vauxhaul", "Fiat"];
 			console.log(cars);
 
@@ -666,6 +669,78 @@
 			cars.unshift("Jeep");
 
 			console.log(cars);
+
+			// Advanced array methods
+			var numbersToTen = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+			function isEven(value, index, array) {
+				return value % 2 == 0;
+			}
+
+			console.log(numbersToTen.every(isEven, this));
+			console.log(numbersToTen.some(isEven, this));
+			numbersToTen.forEach(function(value, index, array) {
+				console.log("Value: " + value + " @: " + index);
+			});
+			console.log(numbersToTen.filter(isEven));
+			console.log(numbersToTen.map(function(value) {
+				return value + 10;
+			}));
+			console.log(
+				numbersToTen.reduce(
+					function(previous, current) {
+						return previous + current;
+					},
+					-100
+				)
+			);
+
+			// Iterative flow -----------------------------------------
+			for(var i = 0; i < 5; i++)
+			{
+				console.log(i);
+			}
+
+			var address = {
+				firstName: "Ben",
+				lastName: "Coveney",
+				houseNumber: "1337",
+				street: "Roady Street",
+				town: "Townham on Town"
+			};
+			
+			for(var addressPart in address)
+			{
+				console.log(addressPart + ": " + address[addressPart]);
+			}
+
+			var j = 0;
+			while(j < 5)
+			{
+				console.log(j);
+				j++;
+			}
+
+			var k = 0;
+			do
+			{
+				console.log(k);
+				k++;
+			}
+			while(k < 5);
+
+			for(var l = 0; l < 10; l++)
+			{
+				if (l % 2 == 0)
+				{
+					continue;
+				}
+				if (l > 8)
+				{
+					break;
+				}
+				console.log(l);
+			}
 		</script>
 	</body>
 </html>
