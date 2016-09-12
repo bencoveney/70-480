@@ -63,7 +63,25 @@
 			<button>Trigger</button>
 		</div>
 
+		<div id="webSockets" style="clear: both;">
+			<h1>WebSockets</h1>
+			<div>
+				<textarea id="wsChat" style="height: 500px; width: 300px;"></textarea>
+			</div>
+			<div>
+				<input id="wsMessage" style="width: 300px;"/>
+			</div>
+			<div>
+				<button id="wsConnect">Connect</button>
+				<button id="wsDisconnect">Disconnect</button>
+				<button id="wsSend">Send</button>
+			</div>
+		</div>
+
 		<script>
+
+			// Event Handlers -----------------------------------------
+
 			// Execute existing handler assigned in the DOM
 			function onloadHandler1() {
 				console.log("Inside onload handler");
@@ -138,6 +156,7 @@
 					bindEvent(mouseInput, "mouseleave");
 					bindEvent(mouseInput, "mousemove");
 
+					// Drag and drop
 					var dropper = document.getElementById("dropper");
 					dropper.addEventListener("dragstart", function() {
 						window.event.dataTransfer.setData("Text", this.id);
@@ -175,6 +194,7 @@
 						});
 					}
 
+					// Custom events
 					var customEvent = new CustomEvent(
 						"apocalypse",
 						{
@@ -194,7 +214,79 @@
 					var customButton = document.querySelector("#custom button");
 					customButton.addEventListener("click", function() {
 						customTarget.dispatchEvent(customEvent);
-					})
+					});
+
+					// Try, Catch & Finally -----------------------------------------
+					try {
+						window.doesntExist();
+						console.log("So close");
+					}
+					catch(exception) {
+						console.log("Gotta catch em all and then log them to the console");
+						console.log("Message: " + exception.message + " Number: " + exception.number + " Name: " + exception.name);
+					}
+					finally {
+						console.log("Always gunna get here");
+					}
+
+					try {
+						throw new Error("It's broke >:(");
+					}
+					catch(exception) {
+						console.log(exception.message);
+					}
+
+					// Web sockets -----------------------------------------
+					var wsConnection;
+
+					var wsChat = document.querySelector("#webSockets #wsChat");
+					var wsMessage = document.querySelector("#webSockets #wsMessage");
+					var wsConnect = document.querySelector("#webSockets #wsConnect");
+					var wsDisconnect = document.querySelector("#webSockets #wsDisconnect");
+					var wsSend = document.querySelector("#webSockets #wsSend");
+
+					function writeLine(text) {
+						wsChat.textContent = wsChat.textContent + text + "\r\n";
+					}
+
+					wsConnect.onclick = function() {
+						if (wsConnection && wsConnection.readyState == WebSocket.OPEN) {
+							wsConnection.close();
+						}
+
+						wsConnection = new WebSocket("wss://echo.websocket.org");
+
+						wsConnection.onopen = function() {
+							writeLine("Opened");
+						}
+
+						wsConnection.onerror = function(error) {
+							console.log(error);
+							writeLine("Error");
+						}
+
+						wsConnection.onmessage = function(message) {
+							writeLine("Recieved: " + message.data);
+						}
+					};
+
+					wsDisconnect.onclick = function() {
+						wsConnection.close();
+						writeLine("Closed");
+					};
+
+					wsSend.onclick = function() {
+						var message = wsMessage.value;
+
+						if(wsConnection.readyState == WebSocket.OPEN) {
+							writeLine("Sending: " + message);
+							wsConnection.send(message);
+						}
+						else {
+							writeLine("You must connect");
+							return;
+						}
+					};
 				},
 				false
 			);
