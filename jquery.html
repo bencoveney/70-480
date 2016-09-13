@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-GB" manifest="webApp.appcache">
+	<head>
+		<meta charset="utf-8" />
+		<script src="./node_modules/jquery/dist/jquery.min.js"></script>
+		<title>Ben is a cool guy - Other info</title>
+	</head>
+	<body>
+		<button id="clicky">Clicky</button>
+		<ul id="listMe">
+			<li>Buh</li>
+			<li>Beh</li>
+			<li>Bah</li>
+		</ul>
+		<script>
+			$("document").ready(function() {
+				$.ajax({
+					url: "data.json",
+					cache: false,
+					dataType: "json",
+					success: function(data) {
+						console.log(data.lol);
+					},
+					error: function(xhr, textStatus, errorThrown) {
+						console.log(errorThrown);
+					}
+				});
+
+				function muhCallback() {
+					$(this).css("background-color", "red");
+
+					$("#listMe li").each(function() {
+						console.log($(this).text());
+					});
+				}
+				$("#clicky").click(muhCallback);
+			})
+		</script>
+	</body>
+</html>
