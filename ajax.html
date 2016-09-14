@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+	<head>
+		<meta charset="utf-8" />
+		<title>Ben is a cool guy - Other info</title>
+	</head>
+	<body>
+		<button id="doNetwork">Do the network</button>
+		<h1>Respsonse Headers</h1>
+		<div id="responseHeaders"></div>
+		<h1>Results</h1>
+		<div id="results"></div>
+		<h1>Status</h1>
+		<div id="status"></div>
+		<script>
+			document.querySelector("#doNetwork").onclick = function() {
+				var request = new XMLHttpRequest();
+
+				request.onreadystatechange = function() {
+					switch(request.readyState) {
+						case request.UNSENT:
+							console.log("0: Unsent");
+							return;
+						case request.OPENED:
+							console.log("1: Open");
+							return;
+						case request.HEADERS_RECEIVED:
+							console.log("2: Headers Received");
+							return;
+						case request.LOADING:
+							console.log("3: Loading");
+							return;
+						case request.DONE:
+							console.log("4: Done");
+
+							if(request.response) {
+								console.log(JSON.parse(request.response).lol);
+
+								document.querySelector("#responseHeaders").innerText = request.getAllResponseHeaders();
+
+								document.querySelector("#results").innerText = request.response;
+							}
+
+							document.querySelector("#status").innerText = "" + request.status + ": " + request.statusText;
+							return;
+						default:
+							console.log(request.readyState);
+					}
+				}
+
+				request.timeout = 2000;
+				request.ontimeout = function() {
+					console.log("Timeout");
+				}
+
+				request.open("GET", "data.json", true);
+				request.send(null);
+			}
+		</script>
+	</body>
+</html>
