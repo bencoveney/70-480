@@ -3,49 +3,67 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Ben is a cool guy - Other info</title>
+		<script src="./node_modules/jquery/dist/jquery.min.js"></script>
 	</head>
 	<body>
-		<button id="doNetwork">Do the network</button>
-		<h1>Respsonse Headers</h1>
+		<button id="doGet">Do the GET</button>
+		<hr />
+		<button id="doPost">Do the POST</button>
+		<hr />
+		<form id="formative">
+			<input name="deets" value="What's happening?" placeholder="Fill me in" />
+			<input type="submit" value="I'm done yo">
+		</form>
+		<hr />
+		<h1>Response Headers</h1>
 		<div id="responseHeaders"></div>
 		<h1>Results</h1>
 		<div id="results"></div>
 		<h1>Status</h1>
 		<div id="status"></div>
 		<script>
-			document.querySelector("#doNetwork").onclick = function() {
+			function onReadyStateChange(request) {
+				switch(request.readyState) {
+					case request.UNSENT:
+					case 0:
+						console.log("0: Unsent");
+						return;
+					case request.OPENED:
+					case 1:
+						console.log("1: Open");
+						return;
+					case request.HEADERS_RECEIVED:
+					case 2:
+						console.log("2: Headers Received");
+						return;
+					case request.LOADING:
+					case 3:
+						console.log("3: Loading");
+						return;
+					case request.DONE:
+					case 4:
+						console.log("4: Done");
+
+						var text = request.response || request.responseText;
+
+						if(text) {
+							document.querySelector("#responseHeaders").innerText = request.getAllResponseHeaders();
+
+							document.querySelector("#results").innerText = text;
+						}
+
+						document.querySelector("#status").innerText = "" + request.status + ": " + request.statusText;
+						return;
+					default:
+						console.log(request.readyState);
+				}
+			}
+
+			document.querySelector("#doGet").onclick = function() {
 				var request = new XMLHttpRequest();
 
 				request.onreadystatechange = function() {
-					switch(request.readyState) {
-						case request.UNSENT:
-							console.log("0: Unsent");
-							return;
-						case request.OPENED:
-							console.log("1: Open");
-							return;
-						case request.HEADERS_RECEIVED:
-							console.log("2: Headers Received");
-							return;
-						case request.LOADING:
-							console.log("3: Loading");
-							return;
-						case request.DONE:
-							console.log("4: Done");
-
-							if(request.response) {
-								console.log(JSON.parse(request.response).lol);
-
-								document.querySelector("#responseHeaders").innerText = request.getAllResponseHeaders();
-
-								document.querySelector("#results").innerText = request.response;
-							}
-
-							document.querySelector("#status").innerText = "" + request.status + ": " + request.statusText;
-							return;
-						default:
-							console.log(request.readyState);
-					}
+					onReadyStateChange(request);
 				}
 
 				request.timeout = 2000;
@@ -55,7 +73,43 @@
 
 				request.open("GET", "data.json", true);
 				request.send(null);
-			}
+			};
+
+			document.querySelector("#doPost").onclick = function() {
+				var request = new XMLHttpRequest();
+
+				request.onreadystatechange = function() {
+					onReadyStateChange(request);
+				}
+
+				request.timeout = 2000;
+				request.ontimeout = function() {
+					console.log("Timeout");
+				}
+
+				var myPayload = {
+					lol: "I'm thinking about my payload"
+				};
+
+				var stringyPayload = JSON.stringify(myPayload);
+
+				request.open("POST", "http://httpbin.org/post", true);
+				request.send(stringyPayload);
+			};
+
+			$("document").ready(function() {
+				$("form").submit(function(event) {
+					event.preventDefault();
+					$.ajax({
+						url: "http://httpbin.org/post",
+						type: "POST",
+						data: $(this).serialize(),
+						success: function(request, status, response) {
+							onReadyStateChange(response);
+						}
+					});
+				});
+			});
 		</script>
 	</body>
 </html>
