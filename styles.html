@@ -76,6 +76,57 @@
 				grid-template-columns: 150px auto 100px 150px;
 				grid-template-rows: 150px 100px auto;
 			}
+
+			.animate1 {
+				background-color: red;
+				transition: background-color 2s;
+			}
+			.animate1:hover {
+				background-color: green;
+			}
+			.animate2 {
+				background-color: red;
+				transition: background-color 2s, margin 2s ease 2s;
+			}
+			.animate2:hover {
+				background-color: blue;
+				margin: -135px 35px 165px -5px;
+			}
+			.animate3 {
+				transform: rotateX(30deg) rotateY(30deg) rotateZ(30deg) scale(0.5) translateX(-200px);
+				transition: transform 3s;
+			}
+			.animate3:hover {
+				transform: rotateX(-30deg) rotateY(-30deg) rotateZ(-30deg) scale(2) translateX(100px);
+			}
+
+			@media screen and (max-width: 800px) and (min-width: 400px) {
+				.media1 {
+					background-color: red;
+				}
+			}
+
+			ul.outer {
+				display: block;
+				float: left;
+				clear: both;
+			}
+
+			.outer input[required]:after {
+				content: "Required";
+			}
+			.outer ul[name=geddon] {
+				border-right: 10px solid grey;
+			}
+			.outer li[name^=bu] {
+				background-color: red;
+			}
+			.outer li[name$=eh] {
+				font-family: "DogLips";
+			}
+			.outer li[name*=ue] {
+				font-weight: bold;
+			}
 		</style>
 	</head>
 	<body>
@@ -138,5 +189,33 @@
 			<div class="myCell cell9">Celling out</div>
 			<div class="myCell cell10">Celling out</div>
 		</div>
+
+		<div class="boxish animate1">
+			<p>Animate plz</p>
+		</div>
+		<div class="boxish animate2">
+			<p>Animate plz</p>
+		</div>
+		<div class="boxish animate3">
+			<p>Animate plz</p>
+		</div>
+
+		<div class="boxish media1">
+			<p>Media Query plz</p>
+		</div>
+
+		<ul class="outer">
+			<li class="first" name="buh">First</li>
+			<li class="second" name="bueh">Second</li>
+			<li>
+				<ul class="inner" name="geddon">
+					<li class="first">First <input type="checkbox" disabled="disabled" /></li>
+					<li class="second">Second <input type="checkbox" /></li>
+					<li class="third">Third <input type="checkbox" checked="checked" /></li>
+					<li class="fourth">Fourth <input type="checkbox" required="required" /></li>
+				</ul>
+			</li>
+			<li class="fourth" name="beh">Fourth</li>
+		</ul>
 	</body>
 </html>
